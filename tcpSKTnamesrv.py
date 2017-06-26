@@ -16,16 +16,26 @@ namedict = {
 #定义基于多线程的服务类
 class Server(ThreadingMixIn, TCPServer):
     pass
+        
 
 
 #定义请求处理类
 class Handler(StreamRequestHandler):
     def handle(self):
- #       addr = self.request.getpeername()
- #       print '..connect from [%s]' % addr
-        key = self.request.recv(1024)
-        if key in namedict:
-            self.request.sendall(namedict[key])
+        while True:
+            key = self.request.recv(1024)
+            if len(key.split())>1:
+                namedict[key.split()[0]] = [key.split()[1],key.split()[2]]
+                self.request.sendall('new server name register successful!')
+            elif len(key.split())== 1:
+                if key in namedict:
+                    self.request.sendall(namedict[key])
+                else:
+                    self.request.sendall('there is no key in registry!')
+            else:
+                self.request.sendall('wrong usage!')
+                pass
+
 
 #实例化服务类对象
 server = Server(ADDR,     # address

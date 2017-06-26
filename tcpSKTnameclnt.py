@@ -5,10 +5,10 @@ from datetime import datetime
 HOST = 'localhost'
 PORT = 21571
 ADDR = (HOST,PORT)
+tcpCliSock = socket(AF_INET,SOCK_STREAM)
+tcpCliSock.connect(ADDR)
 
 while 1:
-    tcpCliSock = socket(AF_INET,SOCK_STREAM)
-    tcpCliSock.connect(ADDR)
     data = raw_input('> ')
     if data is None:
         break
