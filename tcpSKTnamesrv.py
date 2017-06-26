@@ -25,8 +25,12 @@ class Handler(StreamRequestHandler):
         while True:
             key = self.request.recv(1024)
             if len(key.split())>1:
-                namedict[key.split()[0]] = [key.split()[1],key.split()[2]]
-                self.request.sendall('new server name register successful!')
+                self.request.sendall(key)
+                li = []
+                li.append(key.split()[1])
+                li.append(key.split()[2])
+                namedict[key.split()[0]] = li
+                self.request.sendall(namedict[key.split()[0]][0])
             elif len(key.split())== 1:
                 if key in namedict:
                     self.request.sendall(namedict[key])

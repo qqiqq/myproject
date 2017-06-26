@@ -9,6 +9,7 @@ tcpCliSock = socket(AF_INET,SOCK_STREAM)
 tcpCliSock.connect(ADDR)
 
 while 1:
+
     data = raw_input('> ')
     if data is None:
         break
