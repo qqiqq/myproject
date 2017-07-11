@@ -1,3 +1,7 @@
+'''
+ 我在20170711做的一个版本
+ 主要用于测试git的远程仓库
+'''
 import zmq
 import sys
 import random
