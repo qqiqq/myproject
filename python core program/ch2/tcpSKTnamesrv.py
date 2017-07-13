@@ -26,6 +26,9 @@ class Handler(StreamRequestHandler):
         key = self.request.recv(1024)
         if key in namedict:
             self.request.sendall(namedict[key])
+        else:
+            namedict.
+            self.request.sendall(
 
 #实例化服务类对象
 server = Server(ADDR,     # address
