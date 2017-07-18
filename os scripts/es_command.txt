@@ -1,0 +1,84 @@
+﻿数据crud
+查询单个index下所有数据
+curl -XGET 'http://192.168.221.100:10000/gb/_search'
+
+查询单个index下单个type（table）所有数据
+curl -XGET 'http://192.168.221.100:10000/gb/tweet/_search'
+
+查询指定index、type（table）下的指定id的数据
+curl -XGET 'http://192.168.221.100:10000/gb/tweet/3?pretty'
+
+带http头部信息的查询
+curl -i -XGET 'http://192.168.221.100:10000/gb/tweet/3?pretty'
+
+查询指定index、type（table）下的指定id的数据，返回部分指定项数据
+curl -XGET 'http://192.168.221.100:10000/gb/tweet/3?_source=name,tweet&pretty'
+
+检查文档是否存在
+curl -i -XHEAD 'http://192.168.221.100:10000/gb/tweet/3'
+
+删除指定id的文档
+curl -XDELETE 'http://192.168.221.100:10000/blogs/user/2'
+
+
+修改/插入指定文档的数据
+curl -XPUT 'http://192.168.221.100:10000/gb/tweet/3' -d '
+{
+    "date" : "2014-09-13",
+    "name" : "Peter Jones",
+    "tweet" : "Elasticsearch means full text search has never been so easy",
+    "user_id" : 2
+}'
+
+对指定id的文档中添加新的列
+curl -XPOST 'http://192.168.221.100:10000/gb/tweet/3/_update' -d '
+{
+   "doc" : {
+      "tags" : [ "superman" ],
+      "views": 3
+   }
+}'
+
+批量dml操作，其中index为修改或插入指定文档
+curl -XPOST 'http://192.168.221.100:10000/_bulk' -d '
+{ "delete": { "_index": "website", "_type": "blog", "_id": "123" }}
+{ "create": { "_index": "website", "_type": "blog", "_id": "123" }}
+{ "title":    "My first blog post" }
+{ "index":  { "_index": "website", "_type": "blog" }}
+{ "title":    "My second blog post" }
+{ "update": { "_index": "website", "_type": "blog", "_id": "123", "_retry_on_conflict" : 3} }
+{ "doc" : {"title" : "My updated blog post"} } '
+
+curl -XGET 'http://192.168.221.100:10000/gb/tweet/_search' -d '
+{
+  "aggs": {
+    "all_interests": {
+      "terms": { "field": "date" }
+    }
+  }
+}'
+
+
+
+
+集群管理
+查询es基本状态
+curl -XGET 'http://192.168.221.100:10000'
+
+查询es集群健康状态
+curl -XGET 'http://192.168.221.100:10000/_cluster/health?pretty'
+
+添加blogs索引，并设置分片和复制数量
+curl -XPUT 'http://192.168.221.100:10000/blogs' -d '
+{
+  "settings": {
+    "number_of_shards":3,
+    "number_of_replicas":1
+  }
+}'
+
+修改blogs索引相关参数
+curl -XPUT 'http://192.168.221.100:10000/blogs/_settings' -d '
+{
+  "number_of_replicas":2
+}'
