@@ -2,8 +2,10 @@ from random import randint
 from time import sleep
 from Queue import Queue
 from myThread import MyThread
+from threading import enumerate
 import os
 
+res = []
 
 def rowCount(filename):
     n = 0
@@ -13,10 +15,14 @@ def rowCount(filename):
 
 def shard(filenames):
     l = []
-    for f in filenames:
-        row = rowCount(f)
+    for file in filenames:
+        with open(file) as f:
+            row = rowCount(f)
+        print file,' has ',row,' rows'
         l.append(row)
+        sleep(1)
     print sum(l)
+    return res.append(sum(l))
 
 def chunks(arr,n):
     return [arr[i:i+n] for i in range(0,len(arr),n)]
@@ -36,10 +42,14 @@ def main():
     for i in range(nThreads):
         threads[i].start()
 
+    
     for i in range(nThreads):
         threads[i].join()
 
     print 'all DONE!'
+    print fileGroups
+    print res
+    print 'result is :',sum(res)
 
 
 if __name__ == '__main__':
