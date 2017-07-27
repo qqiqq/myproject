@@ -1,0 +1,52 @@
+﻿docker images
+docker pull centos:7
+
+mkdir redis && cd redis
+vi Dockerfile
+
+FROM centos:7
+MAINTAINER Vagrant Zhou vagrantxiang@hotmail.com
+ENV REFRESHED_AT 2017-07-27
+RUN yum update -y
+RUN yum install epel-release -y
+RUN yum install -y redis
+
+VOLUME ["/var/lib/redis","/var/log/redis"]
+EXPOSE 6379
+
+docker build -t vagrant/redis .
+
+mkdir redis_master && cd redis_master
+vi Dockerfile
+
+FROM vagrant/redis
+MAINTAINER vagrant zhou <vagrantxiang@hotmail.com>
+ENV REFRESHED_AT 2017-06-04
+
+RUN sed -i "s/bind 127.0.0.1/bind 0.0.0.0/g" /etc/redis/redis.conf
+ENTRYPOINT [ "redis-server","--logfile /var/log/redis/redis-server.log","--protected-mode no" ]
+
+docker build -t vagrant/redis_master .
+
+mkdir redis_slave && cd redis_slave
+vi Dockerfile
+FROM vagrant/redis
+MAINTAINER vagrant zhou <vagrantxiang@hotmail.com>
+ENV REFRESHED_AT 2017-06-04
+
+RUN sed -i "s/bind 127.0.0.1/bind 0.0.0.0/g" /etc/redis/redis.conf
+ENTRYPOINT [ "redis-server","--logfile /var/log/redis/redis-slave.log","--slaveof redis_primary 6379","--protected-mode no" ]
+
+docker build -t vagrant/redis_slave .
+
+docker run -d -h redis_master --name redis_master vagrant/redis_master
+
+docker run -it --rm --volumes-from redis_master centos:7 cat /var/log/redis/redis-server.log
+
+docker run -d -h redis_slave1 --name redis_slave1 --link redis_master:redis_master vagrant/redis_slave
+
+docker run -it --rm --volumes-from redis_slave1 centos:7 cat /var/log/redis/redis-slave.log
+
+docker run -d -h redis_slave2 --name redis_slave2 --link redis_master:redis_master vagrant/redis_slave
+
+docker run -it --rm --volumes-from redis_slave2 centos:7 cat /var/log/redis/redis-slave.log
