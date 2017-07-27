@@ -4,7 +4,7 @@ docker pull centos:7
 mkdir redis && cd redis
 vi Dockerfile
 
-FROM daocloud.io/centos:7
+FROM centos:7
 MAINTAINER Vagrant Zhou vagrantxiang@hotmail.com
 ENV REFRESHED_AT 2017-07-27
 RUN yum update -y
@@ -35,18 +35,18 @@ MAINTAINER vagrant zhou <vagrantxiang@hotmail.com>
 ENV REFRESHED_AT 2017-06-04
 
 RUN sed -i "s/bind 127.0.0.1/bind 0.0.0.0/g" /etc/redis.conf
-ENTRYPOINT [ "redis-server","--logfile /var/log/redis/redis-slave.log","--slaveof redis_master 6379","--protected-mode no" ]
+ENTRYPOINT [ "redis-server","--logfile /var/log/redis/redis-slave.log","--slaveof redis_primary 6379","--protected-mode no" ]
 
 docker build -t vagrant/redis_slave .
 
 docker run -d -h redis_master --name redis_master vagrant/redis_master
 
-docker run -it --rm --volumes-from redis_master daocloud.io/centos:7 cat /var/log/redis/redis-server.log
+docker run -it --rm --volumes-from redis_master centos:7 cat /var/log/redis/redis-server.log
 
 docker run -d -h redis_slave1 --name redis_slave1 --link redis_master:redis_master vagrant/redis_slave
 
-docker run -it --rm --volumes-from redis_slave1 daocloud.io/centos:7 cat /var/log/redis/redis-slave.log
+docker run -it --rm --volumes-from redis_slave1 centos:7 cat /var/log/redis/redis-slave.log
 
 docker run -d -h redis_slave2 --name redis_slave2 --link redis_master:redis_master vagrant/redis_slave
 
-docker run -it --rm --volumes-from redis_slave2 daocloud.io/centos:7 cat /var/log/redis/redis-slave.log
+docker run -it --rm --volumes-from redis_slave2 centos:7 cat /var/log/redis/redis-slave.log
