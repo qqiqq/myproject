@@ -45,3 +45,20 @@ output {
     index => 'mysql-slow-log-%{host}-%{+YYYY.MM.DD}'
   }
 }
+
+ 
+### 测试logstash性能的config,使用pv -abt测试
+input {
+    generator {
+        count => 10000000
+        message => '{"key1":"value1","key2":[1,2],"key3":{"subkey1":"subvalue1"}}'
+        codec => json
+        threads => 2
+    }
+}
+
+output {
+  stdout {
+    codec => dots
+  }
+}

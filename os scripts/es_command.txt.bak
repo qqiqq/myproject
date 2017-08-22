@@ -1,6 +1,6 @@
 ﻿数据crud
 查询单个index下所有数据
-curl -XGET 'http://192.168.221.100:10000/gb/_search'
+curl -XGET 'http://192.168.221.100:10000/tweet/_search'
 
 查询单个index下单个type（table）所有数据
 curl -XGET 'http://192.168.221.100:10000/gb/tweet/_search'
@@ -94,11 +94,12 @@ curl -XGET 'http://192.168.221.100:10000'
 curl -XGET 'http://192.168.221.100:10000/_cluster/health?pretty'
 
 添加blogs索引，并设置分片和复制数量
-curl -XPUT 'http://192.168.221.100:10000/blogs' -d '
+curl -XPUT 'http://192.168.221.100:10000/megacorp_bak' -d '
 {
   "settings": {
     "number_of_shards":3,
-    "number_of_replicas":1
+    "number_of_replicas":1,
+    "data_path":"/megacorp_bak"
   }
 }'
 
@@ -107,3 +108,13 @@ curl -XPUT 'http://192.168.221.100:10000/blogs/_settings' -d '
 {
   "number_of_replicas":2
 }'
+
+curl -XPUT 'http://192.168.221.100:10000/_cluster/settings' -d '
+{
+  "transient" : 
+    { "cluster.routing.allocation.disk.watermark.low" : "85%", 
+      "cluster.routing.allocation.disk.watermark.high" : "100gb", 
+      "cluster.info.update.interval" : "1m" 
+    } 
+}'
+curl -XGET 'http://192.168.221.100:10000/_cluster/settings?pretty'
