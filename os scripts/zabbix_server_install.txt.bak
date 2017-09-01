@@ -1,0 +1,89 @@
+﻿mysql -uroot -p1234
+create database zabbix character set utf8 collate utf8_bin;
+quit;
+
+mysql -uroot -p1234 zabbix< /root/zabbix-3.4.1/database/mysql/schema.sql
+mysql -uroot -p1234 zabbix< /root/zabbix-3.4.1/database/mysql/images.sql
+mysql -uroot -p1234 zabbix< /root/zabbix-3.4.1/database/mysql/data.sql
+
+groupadd zabbix
+useradd -g zabbix zabbix
+
+tar zxvf zabbix-3.4.1.tar.gz
+cd zabbix-3.4.1
+./configure --enable-server --enable-agent --with-mysql \
+--with-net-snmp --with-libcurl --with-libxml2 \
+--with-unixodbc --prefix=/usr/local/zabbix-3.4.1
+make && make install
+chown -R zabbix:zabbix /usr/local/zabbix-3.4.1
+
+echo 'DBName=zabbix'        >> /usr/local/zabbix-3.4.1/etc/zabbix_server.conf
+echo 'DBUser=root'          >> /usr/local/zabbix-3.4.1/etc/zabbix_server.conf
+echo 'DBPassword=1234'      >> /usr/local/zabbix-3.4.1/etc/zabbix_server.conf
+echo 'DBPort=3306'          >> /usr/local/zabbix-3.4.1/etc/zabbix_server.conf
+
+su - zabbix
+/usr/local/zabbix-3.4.1/sbin/zabbix_server
+
+安装php
+上传php-7.1.8.tar.gz 
+tar zxvf php-7.1.8.tar.gz 
+cd php-7.1.8
+./configure  --prefix=/usr/local/php-7.1.8 \
+--with-config-file-path=/usr/local/php-7.1.8/etc --with-bz2 --with-curl \
+--enable-ftp --enable-sockets --disable-ipv6 --with-gd \
+--with-jpeg-dir=/usr/local --with-png-dir=/usr/local \
+--with-freetype-dir=/usr/local --enable-gd-native-ttf \
+--with-iconv-dir=/usr/local --enable-mbstring --enable-calendar \
+--with-gettext --with-libxml-dir=/usr/local --with-zlib \
+--with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd \
+--enable-dom --enable-xml --enable-fpm --with-libdir=lib64 --enable-bcmath
+make && make install
+cp /root/php-7.1.8/php.ini-production /usr/local/php-7.1.8/etc/php.ini
+
+echo 'max_execution_time = 300'     >> /usr/local/php-7.1.8/etc/php.ini
+echo 'memory_limit = 128M'          >> /usr/local/php-7.1.8/etc/php.ini
+echo 'post_max_size = 16M'          >> /usr/local/php-7.1.8/etc/php.ini
+echo 'upload_max_filesize = 2M'     >> /usr/local/php-7.1.8/etc/php.ini
+echo 'max_input_time = 300'         >> /usr/local/php-7.1.8/etc/php.ini
+echo 'date.timezone = ASIA/SHANGHAI'   >> /usr/local/php-7.1.8/etc/php.ini
+
+yum install -y php*-mysql
+
+/usr/local/php-7.1.8/sbin/php-fpm -c /usr/local/php-7.1.8/etc/ 
+
+添加nginx中的server配置
+touch /etc/nginx/conf.d/zabbix.conf
+cat /etc/nginx/conf.d/  <<eof
+server {
+        listen          8082;
+        server_name     192.168.221.130;
+        error_log       /etc/nginx/zabbix_error.log;
+
+        index index.html index.php index.html;
+        root /httpd/zabbix;
+
+        location /
+        {
+                try_files $uri $uri/ /index.php $args;
+        }
+
+        location ~ .*\.(php)?$ {
+                expires -1s;
+                try_files $uri = 404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                include fastcgi_params;
+                fastcgi_pass  127.0.0.1:9000;
+                fastcgi_index index.php;
+                fastcgi_param  PATH_INFO          $fastcgi_path_info;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+} 
+eof
+
+mkdir -p /httpd/zabbix
+cp -rf /root/zabbix-3.4.1/frontends/php/* /httpd/zabbix/
+chown -R zabbix:zabbix /httpd 
+
+nginx -s reload
+
