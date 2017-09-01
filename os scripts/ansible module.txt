@@ -1,0 +1,1 @@
+ansible centos7 -m git -a "repo=https://github.com/qqiqq/myproject dest=/root/git/myproject version=HEAD"
