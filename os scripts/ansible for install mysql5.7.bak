@@ -196,7 +196,7 @@ vi /etc/ansible/roles/mysql_install/tasks/delete.yml
 
   
 vi /etc/ansible/roles/mysql_install/tasks/main.yml 
-- include: prepare.yml
+- include: copy.yml
 - include: install.yml
 - include: delete.yml
 
