@@ -1,0 +1,28 @@
+﻿关于mysql group replication
+1、MGR是基于paxos算法的工业级多节点集群实现方案
+集群中的所有节点均可将本节点收到的dml事务通过binlog广播到集群中其余节点，
+以保持集群中所有节点的数据一致性
+2、MGR是mysql官方的HA解决方案，非分布式解决方案
+3、MGR只解决集群中数据的最终一致性，管理集群中所有节点的状态，并不负责对外提供服务（读写分离等）
+4、MGR可以实现多主架构
+
+开启MGR的前提：
+1、mysql官方版本5.7.14
+2、启用binlog，格式为format
+log-bin
+binlog-format=row
+3、启用gtid
+gtid-mode=on
+enforce-gtid-consistency
+log-slave-updates=1
+4、使用innodb引擎
+5、确保每个表都有主键
+6、基于表的slave repository
+master-info-repository=TABLE
+relay-log-info-repository=TABLE
+7、dml事务抽取算法
+transaction-write-set-extraction = XXHASH64
+8、binlog checksum
+binlog-checksum=NONE
+9、无法并行ddl
+
