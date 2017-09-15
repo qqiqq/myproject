@@ -1,5 +1,7 @@
 mkdir -p /etc/ansible/roles/mysql_install/templates /etc/ansible/roles/mysql_install/meta /etc/ansible/roles/mysql_install/tasks /etc/ansible/roles/mysql_install/vars /etc/ansible/roles/mysql_install/file
 
+cp mysql-boost-5.7.19.tar.gz /etc/ansible/roles/mysql_install/file
+
 vi /etc/ansible/roles/mysql_install/templates/mysql_install.sh
 #!/bin/bash
 cd /root/mysql-{{ mysql_version }}
@@ -8,7 +10,7 @@ cmake \
 -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DMYSQL_DATADIR=/data \
 -DDOWNLOAD_BOOST=1 \
--DWITH_BOOST=./boost\boost_{{ boost_version }} \
+-DWITH_BOOST=./boost/boost_{{ boost_version }} \
 -DSYSCONFDIR=/etc \
 -DWITH_INNOBASE_STORAGE_ENGINE=1 \
 -DWITH_PARTITION_STORAGE_ENGINE=1 \
@@ -144,7 +146,7 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
   yum: name=mysql-libs state=removed
   ignore_errors: yes
 - name: Clean Yum Repos
-  yum: yum clean all
+  shell: yum clean all
 - name: Install Base Require Software In Redhat Client
   yum: name={{ item }} state=present update_cache=yes
   with_items:
@@ -163,13 +165,11 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
 - name: Create Mysql User In Redhat Client
   user: name={{ mysql_user }} state=present home=/home/mysql shell=/bin/bash
 - name: Create Mysql Dir in Redhat
-  shell: mkdir -p {{ mysql_dir }} {{ mysql_data_dir }} {{ mysql_log_dir }}
-- name: Modify Mysql Base Dir Permission In Redhat Client
-  file: path={{ mysql_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
-- name: Modify Mysql Data Dir Permission In Redhat Client
-  file: path={{ mysql_data_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
-- name: Modify Mysql Log Dir Permission In Redhat Client
-  file: path={{ mysql_log_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
+  file: path={{ item }} state=directory mode=0755 owner=mysql group=mysql
+  with_items:
+    - "{{ mysql_dir }}"
+    - "{{ mysql_data_dir }}"
+    - "{{ mysql_log_dir }}"
 - name: Copy Mysql Software To Redhat Client
   copy: src=/etc/ansible/roles/mysql_install/file/mysql-boost-{{ mysql_version }}.tar.gz dest=/root/mysql-{{ mysql_version }}.tar.gz owner=root group=root
 - name: Uncompression Mysql Software To Redhat Client
@@ -204,7 +204,6 @@ vi /etc/ansible/roles/mysql_install/tasks/main.yml
 vi /etc/ansible/roles/mysql_install/vars/main.yml 
 mysql_dir: /usr/local/mysql
 mysql_data_dir: /data
-mysql_version: 5.7.17
 mysql_user: mysql
 mysql_port: 3306
 mysql_log_dir: /log
@@ -212,7 +211,7 @@ mysql_password: 1234
 boost_version: 1_59_0
 
 
-vi /etc/ansible/mysql5.7_install.yml 
+vi /etc/ansible/mysql_install.yml 
 ---
 - hosts: "{{ host }}"
   remote_user: "root"
@@ -221,4 +220,4 @@ vi /etc/ansible/mysql5.7_install.yml
     - mysql_install
 
 
-time ansible-playbook mysql_install.yml --extra-vars "host=192.168.29.12 id=1 user=root" 
+time ansible-playbook mysql_install.yml --extra-vars "host=192.168.29.12 id=1 mysql_version=5.7.19 user=root" 
