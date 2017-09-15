@@ -1,4 +1,4 @@
-mkdir -p /etc/ansible/roles/mysql_install/templates /etc/ansible/roles/mysql_install/meta /etc/ansible/roles/mysql_install/tasks /etc/ansible/roles/mysql_install/vars
+mkdir -p /etc/ansible/roles/mysql_install/templates /etc/ansible/roles/mysql_install/meta /etc/ansible/roles/mysql_install/tasks /etc/ansible/roles/mysql_install/vars /etc/ansible/roles/mysql_install/file
 
 vi /etc/ansible/roles/mysql_install/templates/mysql_install.sh
 #!/bin/bash
@@ -8,7 +8,7 @@ cmake \
 -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DMYSQL_DATADIR=/data \
 -DDOWNLOAD_BOOST=1 \
--DWITH_BOOST=../boost_1_59_0 \
+-DWITH_BOOST=./boost\boost_{{ boost_version }} \
 -DSYSCONFDIR=/etc \
 -DWITH_INNOBASE_STORAGE_ENGINE=1 \
 -DWITH_PARTITION_STORAGE_ENGINE=1 \
@@ -48,8 +48,8 @@ service mysql start
 vi /etc/ansible/roles/mysql_install/templates/my.cnf
 [mysqld]
 server_id={{ id }}
-log-bin={{ mysql_log_dir }}/mysql1
-log-bin-index={{ mysql_log_dir }}/mysql1.index
+log-bin={{ mysql_log_dir }}/mysql{{ id }}
+log-bin-index={{ mysql_log_dir }}/mysql{{ id }}.index
 datadir={{ mysql_data_dir }}
 socket=/tmp/mysql.sock
 innodb_log_group_home_dir={{ mysql_log_dir }}
@@ -134,13 +134,17 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
   shell: ps -ef|grep mysql|grep -v grep|awk '{print $2}'|xargs -I {} kill -9 {} >>/dev/null 2>&1
   ignore_errors: yes
 - name: Delete Exist Mysql Dir In Redhat Client
-  shell: rm -rf {{ mysql_dir }} {{ mysql_data_dir }} {{ mysql_log_dir }}
+  file: name={{ item }} state=absent
+  with_items:
+    - {{ mysql_dir }}
+    - {{ mysql_data_dir }}
+    - {{ mysql_log_dir }}
   ignore_errors: yes
 - name: Remove MySQL Software In Redhat Client
   yum: name=mysql-libs state=removed
   ignore_errors: yes
 - name: Clean Yum Repos
-  shell: yum clean all
+  yum: yum clean all
 - name: Install Base Require Software In Redhat Client
   yum: name={{ item }} state=present update_cache=yes
   with_items:
@@ -167,7 +171,7 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
 - name: Modify Mysql Log Dir Permission In Redhat Client
   file: path={{ mysql_log_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
 - name: Copy Mysql Software To Redhat Client
-  copy: src=/etc/ansible/roles/mysql_install/file/mysql-{{ mysql_version }}.tar.gz dest=/root/mysql-{{ mysql_version }}.tar.gz owner=root group=root
+  copy: src=/etc/ansible/roles/mysql_install/file/mysql-boost-{{ mysql_version }}.tar.gz dest=/root/mysql-{{ mysql_version }}.tar.gz owner=root group=root
 - name: Uncompression Mysql Software To Redhat Client
   shell: tar zxf /root/mysql-{{ mysql_version }}.tar.gz -C /root/
 - name: Copy Mysql Config file To Redhat Client
@@ -178,10 +182,7 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
   template: src=/etc/ansible/roles/mysql_install/templates/mysql_install.sh dest=/tmp/mysql_install.sh owner={{ mysql_user }} group={{ mysql_user }} mode=0755
 - name: Copy Mysql Start file To Redhat Client
   template: src=/etc/ansible/roles/mysql_install/templates/mysql_start.sh dest=/tmp/mysql_start.sh owner={{ mysql_user }} group={{ mysql_user }} mode=0755
-- name: Copy Mysql Depandency Library to Redhat Client
-  copy: src=/etc/ansible/roles/mysql_install/file/boost_{{ boost_version }}.tar.gz dest=/root/boost_{{ boost_version }}.tar.gz owner=root group=root
-- name: Uncompression Mysql Depandency Library To Redhat Client
-  shell: tar zxf /root/boost_{{ boost_version }}.tar.gz -C /root/
+
 
 vi /etc/ansible/roles/mysql_install/tasks/install.yml 
 
@@ -192,11 +193,11 @@ vi /etc/ansible/roles/mysql_install/tasks/install.yml
 
 vi /etc/ansible/roles/mysql_install/tasks/delete.yml 
 - name: Delete Mysql compression Software In Redhat Client  
-  shell: rm -rf /root/mysql-{{ mysql_version }}.tar.gz /root/boost_{{ boost_version }}.tar.gz /root/mysql-{{ mysql_version }} /root/boost_{{ boost_version }}      
-
+  shell: rm -rf /root/mysql-{{ mysql_version }}.tar.gz /root/mysql-{{ mysql_version }} 
+  
   
 vi /etc/ansible/roles/mysql_install/tasks/main.yml 
-- include: copy.yml
+- include: prepare.yml
 - include: install.yml
 - include: delete.yml
 
@@ -210,3 +211,14 @@ mysql_log_dir: /log
 mysql_password: 1234
 boost_version: 1_59_0
 
+
+vi /etc/ansible/mysql5.7_install.yml 
+---
+- hosts: "{{ host }}"
+  remote_user: "root"
+  gather_facts: True
+  roles:
+    - mysql_install
+
+
+time ansible-playbook mysql_install.yml --extra-vars "host=192.168.29.12 id=1 user=root" 
