@@ -1,14 +1,16 @@
 mkdir -p /etc/ansible/roles/mysql_install/templates /etc/ansible/roles/mysql_install/meta /etc/ansible/roles/mysql_install/tasks /etc/ansible/roles/mysql_install/vars /etc/ansible/roles/mysql_install/file
 
+cp mysql-5.7.19.tar.gz boost_1_59_0.zip /etc/ansible/roles/mysql_install/file
+
 vi /etc/ansible/roles/mysql_install/templates/mysql_install.sh
 #!/bin/bash
 cd /root/mysql-{{ mysql_version }}
 
 cmake \
--DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
--DMYSQL_DATADIR=/data \
+-DCMAKE_INSTALL_PREFIX={{ mysql_dir }} \
+-DMYSQL_DATADIR={{ mysql_data_dir }} \
 -DDOWNLOAD_BOOST=1 \
--DWITH_BOOST=./boost\boost_{{ boost_version }} \
+-DWITH_BOOST=~/boost_1_59_0 \
 -DSYSCONFDIR=/etc \
 -DWITH_INNOBASE_STORAGE_ENGINE=1 \
 -DWITH_PARTITION_STORAGE_ENGINE=1 \
@@ -30,20 +32,21 @@ chown -R {{ mysql_user }}:{{ mysql_user }} {{ mysql_dir}}
 chown -R {{ mysql_user }}:{{ mysql_user }} {{ mysql_data_dir }}
 chown -R {{ mysql_user }}:{{ mysql_user }} {{ mysql_log_dir }}
 
-{{ mysql_dir }}/scripts/mysql_install_db --basedir={{ mysql_dir }} --datadir={{ mysql_data_dir }} --user={{ mysql_user }}
+{{ mysql_dir }}/bin/mysqld --user={{ mysql_user }} --basedir={{ mysql_dir }} --datadir={{ mysql_data_dir }} --initialize-insecure
 
 vi /etc/ansible/roles/mysql_install/templates/mysql_start.sh
 
-cp {{ mysql_dir }}/support-files/mysql.server /etc/init.d/mysql 
+cp -f {{ mysql_dir }}/support-files/mysql.server /etc/init.d/mysql 
 cat {{ mysql_dir }}/my_append.cnf>{{ mysql_dir }}/my.cnf
 chkconfig mysql on 
-service mysql start
+
+{{ mysql_dir }}/bin/mysqld_safe --defaults-file={{ mysql_dir }}/my.cnf --basedir={{ mysql_dir }} --datadir={{ mysql_data_dir }} --user={{ mysql_user }} &
 
 {{ mysql_dir }}/bin/mysql -uroot -e "grant all on *.* to root@'%' identified by '{{ mysql_password }}'"
-{{ mysql_dir }}/bin/mysql -uroot -e "update mysql.user set password=password('{{ mysql_password }}') where user='root'"
-{{ mysql_dir }}/bin/mysql -uroot -e "flush privileges"
-{{ mysql_dir }}/bin/mysql -uroot -p1234 -e "SET PASSWORD = PASSWORD('{{ mysql_password }}')"
+{{ mysql_dir }}/bin/mysql -uroot -e "update mysql.user set authentication_string=password('{{ mysql_password }}') where user='root';commit;flush privileges"
 
+/etc/init.d/mysql stop
+/etc/init.d/mysql start
 
 vi /etc/ansible/roles/mysql_install/templates/my.cnf
 [mysqld]
@@ -53,7 +56,7 @@ log-bin-index={{ mysql_log_dir }}/mysql{{ id }}.index
 datadir={{ mysql_data_dir }}
 socket=/tmp/mysql.sock
 innodb_log_group_home_dir={{ mysql_log_dir }}
-innodb_mirrored_log_groups=1
+#innodb_mirrored_log_groups=1
 innodb_log_files_in_group=4
 innodb_log_file_size=512M
 
@@ -136,15 +139,20 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
 - name: Delete Exist Mysql Dir In Redhat Client
   file: name={{ item }} state=absent
   with_items:
-    - {{ mysql_dir }}
-    - {{ mysql_data_dir }}
-    - {{ mysql_log_dir }}
+    - "{{ mysql_dir }}"
+    - "{{ mysql_data_dir }}"
+    - "{{ mysql_log_dir }}"
+    - "~/mysql-{{ mysql_version }}"
+    - "~/mysql-{{ mysql_version }}.tar.gz"
+    - "{{ mysql_dir }}"
+    - "~/boost_1_59_0.zip"
+    - "~/boost_1_59_0"
   ignore_errors: yes
 - name: Remove MySQL Software In Redhat Client
   yum: name=mysql-libs state=removed
   ignore_errors: yes
 - name: Clean Yum Repos
-  yum: yum clean all
+  shell: yum clean all
 - name: Install Base Require Software In Redhat Client
   yum: name={{ item }} state=present update_cache=yes
   with_items:
@@ -163,17 +171,19 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
 - name: Create Mysql User In Redhat Client
   user: name={{ mysql_user }} state=present home=/home/mysql shell=/bin/bash
 - name: Create Mysql Dir in Redhat
-  shell: mkdir -p {{ mysql_dir }} {{ mysql_data_dir }} {{ mysql_log_dir }}
-- name: Modify Mysql Base Dir Permission In Redhat Client
-  file: path={{ mysql_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
-- name: Modify Mysql Data Dir Permission In Redhat Client
-  file: path={{ mysql_data_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
-- name: Modify Mysql Log Dir Permission In Redhat Client
-  file: path={{ mysql_log_dir }} owner={{ mysql_user }} group={{ mysql_user }} mode=0755
+  file: path={{ item }} state=directory mode=0755 owner=mysql group=mysql
+  with_items:
+    - "{{ mysql_dir }}"
+    - "{{ mysql_data_dir }}"
+    - "{{ mysql_log_dir }}"
 - name: Copy Mysql Software To Redhat Client
-  copy: src=/etc/ansible/roles/mysql_install/file/mysql-boost-{{ mysql_version }}.tar.gz dest=/root/mysql-{{ mysql_version }}.tar.gz owner=root group=root
+  copy: src=/etc/ansible/roles/mysql_install/file/mysql-{{ mysql_version }}.tar.gz dest=/root/mysql-{{ mysql_version }}.tar.gz owner=root group=root
+- name: Copy Mysql dependency boost To Redhat 
+  copy: src=/etc/ansible/roles/mysql_install/file/boost_1_59_0.zip dest=/root/boost_1_59_0.zip owner=root group=root
 - name: Uncompression Mysql Software To Redhat Client
   shell: tar zxf /root/mysql-{{ mysql_version }}.tar.gz -C /root/
+- name: Uncompression Mysql dependency boost
+  shell: unzip /root/boost_1_59_0.zip -d /root/
 - name: Copy Mysql Config file To Redhat Client
   template: src=/etc/ansible/roles/mysql_install/templates/my.cnf dest={{ mysql_dir }}/my_append.cnf owner={{ mysql_user }} group={{ mysql_user }} mode=0755
 - name: append variables to default my.cnf
@@ -187,9 +197,9 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
 vi /etc/ansible/roles/mysql_install/tasks/install.yml 
 
 - name: Install Mysql Software in Redhat
-  shell: sh /tmp/mysql_install.sh
+  shell: sh /tmp/mysql_install.sh >> /tmp/mysql_install.log
 - name: Start Mysql Service In Redhat 
-  shell: sh /tmp/mysql_start.sh
+  shell: sh /tmp/mysql_start.sh >> /tmp/mysql_install.log
 
 vi /etc/ansible/roles/mysql_install/tasks/delete.yml 
 - name: Delete Mysql compression Software In Redhat Client  
@@ -204,15 +214,13 @@ vi /etc/ansible/roles/mysql_install/tasks/main.yml
 vi /etc/ansible/roles/mysql_install/vars/main.yml 
 mysql_dir: /usr/local/mysql
 mysql_data_dir: /data
-mysql_version: 5.7.17
 mysql_user: mysql
 mysql_port: 3306
 mysql_log_dir: /log
 mysql_password: 1234
-boost_version: 1_59_0
 
 
-vi /etc/ansible/mysql5.7_install.yml 
+vi /etc/ansible/mysql_install.yml 
 ---
 - hosts: "{{ host }}"
   remote_user: "root"
@@ -221,4 +229,4 @@ vi /etc/ansible/mysql5.7_install.yml
     - mysql_install
 
 
-time ansible-playbook mysql_install.yml --extra-vars "host=192.168.29.12 id=1 user=root" 
+time ansible-playbook /etc/ansible/mysql_install.yml --extra-vars "host=192.168.29.12 id=1 mysql_version=5.7.19 user=root" 
