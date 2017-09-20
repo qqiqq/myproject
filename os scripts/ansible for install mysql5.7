@@ -148,6 +148,8 @@ vi /etc/ansible/roles/mysql_install/tasks/prepare.yml
     - "~/boost_1_59_0.zip"
     - "~/boost_1_59_0"
   ignore_errors: yes
+- name: Stop CentOS fire wall service
+  systemd: name=firewalld state=stopped
 - name: Remove MySQL Software In Redhat Client
   yum: name=mysql-libs state=removed
   ignore_errors: yes

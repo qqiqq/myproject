@@ -36,11 +36,11 @@ chown -R {{ mysql_user }}:{{ mysql_user }} {{ mysql_log_dir }}
 
 vi /etc/ansible/roles/mysql_install/templates/mysql_start.sh
 
-cp -f {{ mysql_dir }}/support-files/mysql.server /etc/init.d/mysql 
-cat {{ mysql_dir }}/my_append.cnf>{{ mysql_dir }}/my.cnf
+cat {{ mysql_dir }}/support-files/mysql.server > /etc/init.d/mysql
+chmod 700  /etc/init.d/mysql
+cat {{ mysql_dir }}/my_append.cnf > {{ mysql_dir }}/my.cnf
 chkconfig mysql on 
-
-{{ mysql_dir }}/bin/mysqld_safe --defaults-file={{ mysql_dir }}/my.cnf --basedir={{ mysql_dir }} --datadir={{ mysql_data_dir }} --user={{ mysql_user }} &
+/etc/init.d/mysql start
 
 {{ mysql_dir }}/bin/mysql -uroot -e "grant all on *.* to root@'%' identified by '{{ mysql_password }}'"
 {{ mysql_dir }}/bin/mysql -uroot -e "update mysql.user set authentication_string=password('{{ mysql_password }}') where user='root';commit;flush privileges"
