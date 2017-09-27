@@ -1,0 +1,41 @@
+向MGR添加两节点
+节点名	Internal port	  Db port	datadir	conf	  mode
+s6	     5706	  9006	/data/for_gr/s6	s6.cnf	read/write
+s7	     5707	  9007	/data/for_gr/s7	S7.cnf	read/write
+
+for i in {1..5};do /usr/local/mysql/bin/mysql -S /data/for_gr/s$i/s$i.sock -e "set global group_replication_group_seeds='127.0.0.1:5701,127.0.0.1:5702,127.0.0.1:5703,127.0.0.1:5704,127.0.0.1:5705,127.0.0.1:5706,127.0.0.1:5707'";done
+
+创建数据文件目录
+for i in {6..7};do mkdir -p /data/for_gr/s$i ;done
+
+复制配置文件
+for i in {6..7};do cp /root/s1.cnf /root/s$i.cnf;done
+
+修改配置文件中的参数项
+for i in {6..7};do sed -i "s/s1/s$i/g" /root/s$i.cnf;done
+for i in {6..7};do sed -i "s/server_id=1/server_id=$i/g" /root/s$i.cnf;done
+for i in {6..7};do sed -i "s/port=9001/port=900$i/g" /root/s$i.cnf;done
+for i in {6..7};do sed -i "s/loose-group_replication_local_address= \"127.0.0.1:5701\"/loose-group_replication_local_address= \"127.0.0.1:570$i\"/g" /root/s$i.cnf;done
+for i in {6..7};do sed -i "s/loose-group_replication_group_seeds= \"127.0.0.1:5701,127.0.0.1:5702,127.0.0.1:5703,127.0.0.1:5704,127.0.0.1:5705\"/loose-group_replication_group_seeds= \"127.0.0.1:5701,127.0.0.1:5702,127.0.0.1:5703,127.0.0.1:5704,127.0.0.1:5705,127.0.0.1:5706,127.0.0.1:5707\"/g" /root/s$i.cnf;done
+
+for i in {6..7};do cp /root/s$i.cnf /data/conf/for_gr/;done
+
+for i in {6..7};do mkdir -p /data/for_gr/s$i && chown -R mysql:mysql /data/for_gr;done
+for i in {6..7};do chown -R mysql:mysql /data/for_gr/s$i;done
+
+初始化数据库
+for i in {6..7};do /usr/local/mysql/bin/mysqld --initialize-insecure --basedir=/usr/local/mysql --datadir=/data/for_gr/s$i ;done;
+
+启动数据库
+for i in {6..7};do chown -R mysql:mysql /data/for_gr/s$i;done
+for i in {6..7}; do /usr/local/mysql/bin/mysqld_safe --defaults-file=/data/conf/for_gr/s$i.cnf &  done
+
+创建复制、管理用户
+for i in {6..7};do /usr/local/mysql/bin/mysql -S /data/for_gr/s$i/s$i.sock -e "source /root/user.sql";done
+
+初始化MGR
+启动主节点
+
+启动其余节点
+for i in {6..7};do /usr/local/mysql/bin/mysql -S /data/for_gr/s$i/s$i.sock -e "INSTALL PLUGIN group_replication SONAME 'group_replication.so';START GROUP_REPLICATION;";done
+/usr/local/mysql/bin/mysql -S /data/for_gr/s1/s1.sock -e "SELECT * FROM performance_schema.replication_group_members;"
