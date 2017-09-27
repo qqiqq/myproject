@@ -141,3 +141,46 @@ def update(cur):
     cur.execute(
         "UPDATE users SET projid=%d WHERE projid=%d" % (to, fr))
     return fr, to, getRC(cur)
+
+def delete(cur):
+    rm = rand(1,5)
+    cur.execute('DELETE FROM users WHERE projid=%d' % rm)
+    return rm, getRC(cur)
+
+def dbDump(cur):
+    cur.execute('SELECT * FROM users')
+    print '\n%s' % ''.join(map(cformat,FIELDS))
+    for data in cur.fetchall():
+        print ''.join(map(tformat,data))
+
+
+def main():
+    db = setup()
+    print '*** Connect to %r database' % db
+    cxn = connect(db)
+    if not cxn:
+        print 'Error: %r not supported or unreachable, exiting' % db
+        return
+    cur = cxn.cursor()
+
+    print '\n*** Create users table (drop old one if app1.)'
+    create(cur)
+    print '\n*** Insert names into table'
+    insert(cur,db)
+    dbDump(cur)
+
+    fr,to,num = update(cur)
+    dbDump(cur)
+
+    rm,num = delete(cur)
+    dbDump(cur)
+
+    drop(cur)
+
+    cur.close()
+    cxn.commit()
+
+    cxn.close()
+    
+if __name__ == "__main__":
+    main()
