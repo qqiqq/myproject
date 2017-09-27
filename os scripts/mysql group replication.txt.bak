@@ -1,0 +1,176 @@
+﻿cat > /usr/local/mysql/my.cnf << EOF
+[client]
+port = 3306
+socket = /tmp/mysql.sock
+default-character-set = utf8mb4
+
+[mysqld]
+
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+ 
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+ 
+# replication and binlog related options
+binlog-row-image = MINIMAL
+binlog-rows-query-log-events = ON
+log-bin-trust-function-creators = TRUE
+max-binlog-size = 1G
+relay-log-recovery = ON
+slave-parallel-type = LOGICAL_CLOCK
+slave-preserve-commit-order = ON
+slave-parallel-workers = 8
+slave-rows-search-algorithms = 'INDEX_SCAN,HASH_SCAN'
+slave-type-conversions = ALL_NON_LOSSY
+sync-master-info = 1000
+sync-relay-log = 1000
+ 
+# group replication pre-requisites & recommendations
+log-bin
+binlog-format = ROW
+gtid-mode = ON
+enforce-gtid-consistency = ON
+log-slave-updates = ON
+master-info-repository = TABLE
+relay-log-info-repository = TABLE
+binlog-checksum = NONE
+# prevent use of non-transactional storage engines
+disabled_storage_engines="MyISAM,BLACKHOLE,FEDERATED,ARCHIVE"
+# InnoDB gap locks are problematic for multi-primary conflict detection; none are used with READ-COMMITTED
+# So if you don't rely on REPEATABLE-READ semantics and/or wish to use multi-primary mode then this
+# isolation level is recommended 
+transaction-isolation = 'READ-COMMITTED'
+ 
+# group replication specific options
+plugin-load = group_replication.so
+group_replication = FORCE_PLUS_PERMANENT
+transaction-write-set-extraction = XXHASH64
+group_replication_start_on_boot = ON
+group_replication_bootstrap_group = OFF
+group_replication_group_name = 550fa9ee-a1f8-4b6d-9bfe-c03c12cd1c72
+group_replication_local_address = '192.168.1.92:6606'
+group_replication_group_seeds = '192.168.1.93:6606,192.168.1.94:6606'
+
+
+port = 3306
+socket = /tmp/mysql.sock
+
+basedir = /usr/local/mysql
+datadir = /data
+pid-file = /data/mysql.pid
+user = mysql
+server-id = 1
+
+#skip-name-resolve
+#skip-networking
+back_log = 300
+
+max_connections = 1000
+max_connect_errors = 6000
+open_files_limit = 65535
+table_open_cache = 256
+
+thread_cache_size = 8
+
+
+log-bin=/log/binlog/mysql1
+binlog_format = row
+sync_binlog=1
+expire_logs_days = 30
+
+slow_query_log = 1
+long_query_time = 3
+slow_query_log_file = /data/mysql-slow.log
+
+explicit_defaults_for_timestamp
+
+#lower_case_table_names = 1
+
+skip-external-locking
+
+default_storage_engine = InnoDB
+#default-storage-engine = MyISAM
+innodb_file_per_table = 1
+innodb_open_files = 500
+innodb_flush_log_at_trx_commit = 1
+innodb_log_file_size = 100M
+innodb_log_files_in_group = 4
+innodb_max_dirty_pages_pct = 40
+innodb_lock_wait_timeout = 120
+
+[mysqldump]
+max_allowed_packet = 16M
+
+EOF
+
+以上内容随不同实例而不同
+
+## 启动bootstrap实例
+/etc/init.d/mysql start 
+
+## 添加同步用户
+SET SQL_LOG_BIN=0;
+CREATE USER repl;
+grant replication slave on *.* to repl identified by '1234';
+SET SQL_LOG_BIN=1;
+CHANGE MASTER TO MASTER_USER='rpl_user', MASTER_PASSWORD='rpl_pass' FOR CHANNEL 'group_replication_recovery';
+
+## 安装MGR组件
+INSTALL PLUGIN group_replication SONAME 'group_replication.so';  
+
+## 初始化节点启动MGR集群
+SET GLOBAL group_replication_bootstrap_group=ON; 
+start group_replication
+
+
+确认启动
+select * from performance_schema.replication_group_members;
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+| CHANNEL_NAME              | MEMBER_ID                            | MEMBER_HOST | MEMBER_PORT | MEMBER_STATE |
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+| group_replication_applier | 39a07a39-4b82-44d2-a3cd-978511564a57 | hanode2     |        3306 | ONLINE       |
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+1 row in set (0.00 sec)
+
+## 创建测试数据
+create database boom;
+use boom;
+create table boomballa(id int not null,name varchar(32),primary key(id));
+insert into boomballa(id,name) values(1,'boomballa.top');
+insert into boomballa(id,name) values(2,'myblog');
+
+
+## 启动后续节点
+/etc/init.d/mysql start 
+SET SQL_LOG_BIN=0;
+CREATE USER repl;
+grant replication slave on *.* to repl identified by '1234';
+SET SQL_LOG_BIN=1;
+CHANGE MASTER TO MASTER_USER='rpl_user', MASTER_PASSWORD='rpl_pass' FOR CHANNEL 'group_replication_recovery';
+INSTALL PLUGIN group_replication SONAME 'group_replication.so';
+START GROUP_REPLICATION;
+SELECT * FROM performance_schema.replication_group_members;
+
+以上步骤在所有节点执行
+
+
+
+## 监控MGR集群
+select * from performance_schema.replication_group_members; 
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+| CHANNEL_NAME              | MEMBER_ID                            | MEMBER_HOST | MEMBER_PORT | MEMBER_STATE |
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+| group_replication_applier | 39a07a39-4b82-44d2-a3cd-978511564a57 | hanode2     |        3306 | ONLINE       |
+| group_replication_applier | 49311a3a-e058-46ba-8e7b-857b5db7d33f | hanode3     |        3306 | ONLINE       |
+| group_replication_applier | de6858e8-0669-4b82-a188-d2906daa6d91 | hanode4     |        3306 | ONLINE       |
++---------------------------+--------------------------------------+-------------+-------------+--------------+
+3 rows in set (0.00 sec) 
+
+查询集群中每个节点状态
+select * from performance_schema.replication_group_member_stats 
+
+
+## 集群添加成员
+# 备份集群节点数据，类似主从集群
+mysqldump -u <user> -p -h <ip> --single-transaction --master-data=2 --flush-logs --triggers --quick --all-databases >db_20110531.sql
