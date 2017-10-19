@@ -1771,3 +1771,14 @@ Caused by: org.apache.http.client.HttpResponseException: Requested Range Not Sat
 
 !ENTRY org.eclipse.recommenders.models.rcp 1 0 2017-10-18 21:21:04.336
 !MESSAGE org.eclipse.recommenders:index::zip:0.0.0 could not be resolved from the model repositories. Are you offline?
+
+!ENTRY org.eclipse.ui.ide 4 4 2017-10-18 21:57:07.453
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 2 1 2017-10-18 21:57:07.454
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2017-10-18 21:57:07.454
+!MESSAGE The project description file (.project) for 'RemoteSystemsTempFiles' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.core.resources 2 10035 2017-10-18 21:57:09.447
+!MESSAGE The workspace will exit with unsaved changes in this session.
