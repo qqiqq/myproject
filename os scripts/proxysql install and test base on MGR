@@ -1,0 +1,89 @@
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(100,'192.168.159.14',9001,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(100,'192.168.159.14',9002,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(100,'192.168.159.14',9003,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(100,'192.168.159.14',9004,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(1000,'192.168.159.14',9005,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(1000,'192.168.159.14',9006,1,1000,1000,'MGR cluster');
+insert into mysql_servers(hostgroup_id,hostname,port,weight,max_connections,max_replication_lag,comment) values(1000,'192.168.159.14',9007,1,1000,1000,'MGR cluster');
+select * from mysql_servers;   
+
+/usr/local/mysql/bin/mysql -uroot -p1234 -S /data/for_gr/s1/s1.sock  -e"GRANT SELECT, INSERT, UPDATE, DELETE ON 'test'.* TO 'app'@'192.168.159.14' identified by 'app';GRANT USAGE ON *.* TO 'proxysql'@'192.168.159.14' IDENTIFIED BY 'proxysql';flush privileges";done
+
+insert into mysql_users(username,password,active,default_hostgroup,default_schema,transaction_persistent) values('app','app',1,100,'test',1);
+select * from mysql_users;
+
+set mysql-monitor_username='proxysql';
+set mysql-monitor_password='proxysql';
+
+set mysql-default_charset='utf8mb4';
+set mysql-query_retries_on_failure=0;
+set mysql-ping_timeout_server=500;
+set mysql-monitor_connect_timeout=1000;
+set mysql-default_max_latency_ms=2000;
+set mysql-monitor_replication_lag_interval=500;
+set mysql-ping_interval_server_msec=3000;
+set mysql-monitor_ping_interval=5000;
+set mysql-connect_timeout_server_max=3000;
+
+-- 应用到线上
+load mysql servers to runtime;
+load mysql users to runtime;
+save mysql users to mem;
+load mysql variables to runtime;
+
+-- 持久化
+save mysql servers to disk;
+save mysql users to disk;
+save mysql variables to disk;
+
+连接数据库，通过proxysql的客户端接口访问(6033)：
+/usr/local/mysql/bin/mysql -uapp -papp -h192.168.159.14 -P6033
+show databases;
+insert into t1 values(1),(2),(3);
+select * from t1;
+begin;
+insert into t1 values(111),(22),(33);
+commit;
+select * from t1;
+
+/usr/local/mysql/bin/mysql -uadmin -padmin -h127.0.0.1 -P6032
+select Command,Total_Time_us,Total_cnt from stats_mysql_commands_counters where Total_cnt >0;
+select * from stats_mysql_query_digest;
+
+
+定义路由规则
+/usr/local/mysql/bin/mysql -uadmin -padmin -h127.0.0.1 -P6032
+INSERT INTO mysql_query_rules(active,match_pattern,destination_hostgroup,apply) VALUES(1,'^SELECT.*FOR UPDATE$',100,1);
+INSERT INTO mysql_query_rules(active,match_pattern,destination_hostgroup,apply) VALUES(1,'^SELECT',1000,1);
+load mysql query rules to runtime;
+save mysql query rules to disk;
+
+select * from stats_mysql_query_digest_reset;
+
+insert into sb values(1),(2),(3);
+
+select * from sb;
+
+start transaction;
+
+insert into sb values(11),(22),(33);
+
+commit;
+
+select * from sb;
+
+select * from sb for update;
+
+insert into sb values(111),(222),(333);
+
+select * from sb;
+
+查看统计信息：
+
+select * from stats_mysql_query_digest;
+
+sysbench 测试
+./bin/sysbench --test=./share/sysbench/oltp_read_write.lua --mysql-host=192.168.159.14 --mysql-port=6033 --mysql-user=app --mysql-password=app --mysql-db=test  --report-interval=10  --max-requests=0 --time=300 --threads=4 --tables=1  --table-size=500000 --skip-trx=on --db-ps-mode=disable --mysql-ignore-errors=1062 prepare/run/clean
+
+
+select hostgroup,schemaname,username,substr(digest_text,120,-120),count_star from stats_mysql_query_digest;
