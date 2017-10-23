@@ -16,6 +16,7 @@ DBNAME = 'test'
 DBUSER = 'root'
 DB_EXC = None
 NAMELEN = 16
+n = 0
 
 tformat = lambda s: str(s).title().ljust(COLSIZ)
 cformat = lambda s: s.opper().ljust(COLSIZ)
@@ -104,8 +105,13 @@ def create(cur):
             projid INTEGER)
           ''' % NAMELEN)
     except DB_EXC.OperationalError,e:
-        drop(cur)
-        create(cur)
+        if n > 3:
+            return DB_EXC.OperationalError
+        else:
+            n += 1
+            drop(cur)
+            create(cur)
+
 
 drop = lambda cur: cur.execute('DROP TABLE users')
 
