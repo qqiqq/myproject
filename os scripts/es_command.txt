@@ -83,6 +83,8 @@ curl -XGET 'http://192.168.221.100:10000/gb/tweet/_search' -d '
   }
 }'
 
+查看映射gb索引tweet类型
+curl -XGET 192.168.29.8:10010/gb/_mapping/tweet?pretty
 
 
 
@@ -97,7 +99,7 @@ curl -XPOST http://192.168.221.100:10000/_cluster/node-1/_shutdown
 
  
 查询es基本状态
-curl -XGET 'http://192.168.221.100:10000'
+curl -XGET 'http://192.168.227.100:10000'
 
 查询es集群健康状态
 curl -XGET 'http://192.168.221.100:10000/_cluster/health?pretty'
