@@ -30,9 +30,12 @@ class SQLAlchemyTest(object):
         try:
             eng.connect()
         except exc.OperationalError:
-            eng = create_engine(dirname(dsn))
-            eng.execute('CREATE DATABASE %s' % DBNAME).close()
-            eng = create_engine(dsn)
+            try:
+                eng = create_engine(dirname(dsn))
+                eng.execute('CREATE DATABASE %s' % DBNAME).close()
+                eng = create_engine(dsn)
+            except:
+                raise RuntimeError()
 
         Session = orm.sessionmaker(bind=eng)
         self.ses = Session()
@@ -67,8 +70,10 @@ class SQLAlchemyTest(object):
         self.ses.commit()
         return rm, i+1
 
-    def dbDump(self):
+    def dbDump(self,newest5=False):
         printf('\n%s' % ''.join(map(cformat, FIELDS)))
+        if newest5==True:
+            users = self.ses.query(Users).
         users = self.ses.query(Users).all()
         for user in users:
             printf(user)
