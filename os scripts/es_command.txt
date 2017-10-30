@@ -129,3 +129,39 @@ curl -XPUT 'http://192.168.221.100:10000/_cluster/settings' -d '
     } 
 }'
 curl -XGET 'http://192.168.221.100:10000/_cluster/settings?pretty'
+
+curl -XPUT 'http://192.168.159.14:10000/vagrant' -d '
+{
+  "mappings": {
+    "tweet" : {
+      "properties" : {
+        "tweet" : {
+          "type" :    "string",
+          "analyzer": "english"
+        },
+        "date" : {
+          "type" :   "date"
+        },
+        "name" : {
+          "type" :   "string"
+        },
+        "user_id" : {
+          "type" :   "long"
+        }
+      }
+    }
+  }
+}
+'
+
+curl -XPUT 'http://192.168.159.14:10000/vagrant/_mapping/tweet' -d '
+{
+  "properties" : {
+    "tag" : {
+      "type" :    "string",
+      "index":    "not_analyzed"
+    }
+  }
+}'
+
+结构化查询 Query DSL
