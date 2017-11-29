@@ -1,0 +1,87 @@
+broker.id=0
+listeners=PLAINTEXT://localhost:9093
+host.name=localhost
+port=9092
+
+#give the directory for data persistence:
+log.dirs=/kafka/server0.log
+
+
+
+
+
+#default replication factor for the automatically created topics.
+default.replication.factor=3
+
+#This is the time period within which, 
+#if the leader does not receive any fetch requests, 
+#it is moved out of in-sync replicas and is treated as dead.
+replica.lag.time.max.ms=3000
+
+
+#This sets the maximum amount of time for the leader
+#to respond to a replica¡¯s fetch request.
+replica.fetch.wait.max.ms=1000
+
+#This specifies the number of threads used to replicate the messages from the leader.
+num.replica.fetchers=3
+
+#This specifies the frequency at which 
+#each replica saves its high watermark in the disk for recovery
+replica.high.watermark.checkpoint.interval.ms=3000
+
+replica.socket.receive.buffer.bytes=65536
+
+
+zookeeper.connect=127.0.0.1:2181/kafka,192.168.0.32:2181/kafka
+
+#This specifies the time within which, 
+#if the heartbeat from the server is not received, it is considered dead.
+zookeeper.session.timeout.ms=6000
+
+#This specifies the time a ZooKeeper follower can be behind its leader.
+zookeeper.sync.time.ms=2000
+
+#Setting this value to true will make sure that, 
+#if you fetch metadata or produce messages for a nonexistent topic, 
+#it will be automatically created
+auto.create.topics.enable=false
+
+#This setting, if set to true, 
+#makes sure that when a shutdown is called on the broker, 
+#and if it¡¯s the leader of any topic, 
+#then it will gracefully move all leaders to a different broker before it shuts down
+controlled.shutdown.enable=true
+
+#This sets the maximum number of retries 
+#that the broker makes to do a controlled shutdown before doing an unclean one
+controlled.shutdown.max.retries=3 
+
+#This sets the backoff time between the controlled shutdown retries
+controlled.shutdown.retry.backoff.ms=5000
+
+#If this is set to true, 
+#the broker will automatically try to balance the leadership of partitions 
+#among the brokers by periodically setting the leadership 
+#to the preferred replica of each partition if available
+auto.leader.rebalance.enable=false
+
+
+leader.imbalance.per.broker.percentage=10
+
+leader.imbalance.check.interval.seconds=300
+
+#This setting, if set to true, 
+#allows the replicas that are not in-sync replicas (ISR) to become the leader. 
+#This can lead to data loss.
+unclean.leader.election.enable=false
+
+#some setting for offset topic
+offsets.topic.num.partitions=50
+offsets.topic.retention.minutes=1440
+offsets.retention.check.interval.ms=600000
+offsets.topic.replication.factor=3
+offsets.topic.segment.bytes=104857600
+offsets.load.buffer.size=5242880
+offsets.commit.required.acks=-1
+offsets.commit.timeout.ms=5000
