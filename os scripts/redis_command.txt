@@ -1,0 +1,42 @@
+设置字符串键值
+set foo bar
+
+查询字符串
+get foo
+
+设置多个字符串键值
+mset a 1 b 2 c 3 d 4
+
+查询多个字符串
+mget a b c d
+
+设置字符串时，对应键不存在，否则设置失败，
+setnx hello world
+可用于分布式事务锁：https://redis.io/topics/distlock
+
+
+计数
+incr counter
+
+自增还有以下函数
+decr key 自减
+incrby key increment 自增指定值
+decrby key decrement 自减指定值
+incrbyfloat key increment 自增指定浮点值
+
+键值后追加
+APPEND hello ' and beijing'
+
+键值字符串长度
+STRLEN hello
+
+设置字符串键值，并返回被覆盖的原值
+getset hello world
+
+设置字符串键值，从指定位置（0）开始，替换成指定值（lol）
+SETRANGE hello 0 lol
+
+从指定位置范围内获取字符串键值
+GETRANGE hello 1 3
+
+
