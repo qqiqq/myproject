@@ -120,3 +120,9 @@ lset listkey 3 xxx
 brpop list1 list 2 list3 0
 timeout为0时一直等待队列中填充数据（若队列为空）
 一旦指定队列中有数据，将会在第一个发起brpop的会话中反馈元素
+
+以下是适用list的应用场景
+lpush+lpop=Stack（栈）
+lpush+rpop=Queue（队列）
+lpsh+ltrim=Capped Collection（有限集合）
+lpush+brpop=Message Queue（消息队列）

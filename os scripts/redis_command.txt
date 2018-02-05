@@ -126,3 +126,57 @@ lpush+lpop=Stack（栈）
 lpush+rpop=Queue（队列）
 lpsh+ltrim=Capped Collection（有限集合）
 lpush+brpop=Message Queue（消息队列）
+
+
+集合操作：
+添加集合元素
+sadd myset a b c
+
+删除元素
+srem myset a b
+
+计算集合内元素数量（时间复杂度为O（1））
+scard myset
+
+集合内是否存在元素c
+SISMEMBER myset c
+
+随机返回指定数量的集合内元素，不指定数量，默认为1
+SRANDMEMBER myset 3
+
+随机弹出指定数量的集合内元素，不指定数量，默认为1
+spop myset 2
+
+遍历集合内元素
+SMEMBERS myset
+
+集合间操作
+注意：redis集群版对多key命令的支持，只能支持多key都在同一个slot上，即使多个slot在同一个节点上也不行
+
+多个集合的交集
+sinter user:1:follow user:2:follow
+
+多个集合的并集
+sunion user:1:follow user:2:follow
+
+多个集合的差集
+sdiff user:1:follow user:2:follow
+
+将多个集合的计算结果存入user:1_2:inter集合中
+sinterstore/suionstore/sdiffstore user:1_2:inter user:1:follow user:2:follow
+
+以下是适用集合的应用场景
+sadd=Tagging（标签）
+spop/srandmember=Random item（生成随机数，比如抽奖）
+sadd+sinter=Social Graph（社交需求）
+
+
+有序集合
+添加成员，时间复杂度为O（log（n））
+zadd user:ranking 1 kris 91 mike 200 frank 220 tim 250 martin
+
+计算成员个数
+zcard user:ranking
+
+查询某个成员的分数，如果成员不存在则返回nil
+ZSCORE user:ranking mike
