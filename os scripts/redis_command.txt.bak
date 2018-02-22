@@ -126,3 +126,133 @@ lpush+lpop=Stack（栈）
 lpush+rpop=Queue（队列）
 lpsh+ltrim=Capped Collection（有限集合）
 lpush+brpop=Message Queue（消息队列）
+
+
+集合操作：
+添加集合元素
+sadd myset a b c
+
+删除元素
+srem myset a b
+
+计算集合内元素数量（时间复杂度为O（1））
+scard myset
+
+集合内是否存在元素c
+SISMEMBER myset c
+
+随机返回指定数量的集合内元素，不指定数量，默认为1
+SRANDMEMBER myset 3
+
+随机弹出指定数量的集合内元素，不指定数量，默认为1
+spop myset 2
+
+遍历集合内元素
+SMEMBERS myset
+
+集合间操作
+注意：redis集群版对多key命令的支持，只能支持多key都在同一个slot上，即使多个slot在同一个节点上也不行
+
+多个集合的交集
+sinter user:1:follow user:2:follow
+
+多个集合的并集
+sunion user:1:follow user:2:follow
+
+多个集合的差集
+sdiff user:1:follow user:2:follow
+
+将多个集合的计算结果存入user:1_2:inter集合中
+sinterstore/suionstore/sdiffstore user:1_2:inter user:1:follow user:2:follow
+
+以下是适用集合的应用场景
+sadd=Tagging（标签）
+spop/srandmember=Random item（生成随机数，比如抽奖）
+sadd+sinter=Social Graph（社交需求）
+
+
+有序集合
+添加成员，时间复杂度为O（log（n））
+zadd user:ranking 1 kris 91 mike 200 frank 220 tim 250 martin
+
+计算成员个数
+zcard user:ranking
+
+查询某个成员的分数，如果成员不存在则返回nil
+ZSCORE user:ranking mike
+
+计算成员排名
+从高到低排（从0开始）
+zrevrank user:ranking mike
+从低到高排（从0开始）
+zrank user:ranking tim
+
+删除成员
+ZREM user:ranking tim
+
+增加成员分数
+ZINCRBY user:ranking 9 kris
+
+返回指定范围的成员，并返回分数（可选）
+从高到低排（从0开始）
+ZREVRANGE user:ranking 2 4 withscores
+从低到高排（从0开始）
+zrange user:ranking 0 3 withscores
+返回所有成员
+zrange user:ranking 0 -1 withscores
+
+返回指定分数的成员，并返回分数（可选）
+ZRANGEBYSCORE user:ranking 50 220 withscores
+zrevrangebyscore user:ranking 221 200 withscores
+200以上的成员（无限大）
+ZRANGEBYSCORE user:ranking 200 +inf withscores
+
+返回指定分数内的成员数量
+zcount user:ranking 100 200
+
+删除指定排名内的成员
+ZREMRANGEBYRANK user:ranking 0 1
+类似
+删除指定分数内的成员
+zremrangebyscore user:ranking 250 +inf
+
+集合间操作
+交集
+使用默认参数，集合成员做交集，分数相加
+zinterstore user:ranking:1_inter_2 2 user:ranking:1 user:ranking:2
+集合成员做交集，分数取交集成员的分数乘以权重后的较大值
+zinterstore user:ranking:1_inter_2 2 user:ranking:1 user:ranking:2 weights 1 0.5 aggregate max
+
+并集
+类似交集，参数作用与交集一致
+zunionstore user:ranking:1_union_2 2 user:ranking:1 user:ranking:2
+
+
+使用场景：
+排行榜系统
+
+
+单键管理
+删除指定键
+del hello [key]
+
+重命名键，可以对集合、hash等键重命名
+rename zsetkey zsetky
+rename user:1 user:info:1
+当重命名的键不存在时，重命名才能成功，避免覆盖
+renamenx zsetkey zsetky
+
+返回当前库中的键值对数量
+dbsize
+
+随机返回一个键
+randomkey
+
+键过期
+EXPIRE hello 10
+查询键的剩余时间
+ttl hello
+毫秒级过期时间
+pexpire key milliseconds
+清除键的过期时间，即保留键
+PERSIST key

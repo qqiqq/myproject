@@ -180,3 +180,83 @@ zcard user:ranking
 
 查询某个成员的分数，如果成员不存在则返回nil
 ZSCORE user:ranking mike
+
+计算成员排名
+从高到低排（从0开始）
+zrevrank user:ranking mike
+从低到高排（从0开始）
+zrank user:ranking tim
+
+删除成员
+ZREM user:ranking tim
+
+增加成员分数
+ZINCRBY user:ranking 9 kris
+
+返回指定范围的成员，并返回分数（可选）
+从高到低排（从0开始）
+ZREVRANGE user:ranking 2 4 withscores
+从低到高排（从0开始）
+zrange user:ranking 0 3 withscores
+返回所有成员
+zrange user:ranking 0 -1 withscores
+
+返回指定分数的成员，并返回分数（可选）
+ZRANGEBYSCORE user:ranking 50 220 withscores
+zrevrangebyscore user:ranking 221 200 withscores
+200以上的成员（无限大）
+ZRANGEBYSCORE user:ranking 200 +inf withscores
+
+返回指定分数内的成员数量
+zcount user:ranking 100 200
+
+删除指定排名内的成员
+ZREMRANGEBYRANK user:ranking 0 1
+类似
+删除指定分数内的成员
+zremrangebyscore user:ranking 250 +inf
+
+集合间操作
+交集
+使用默认参数，集合成员做交集，分数相加
+zinterstore user:ranking:1_inter_2 2 user:ranking:1 user:ranking:2
+集合成员做交集，分数取交集成员的分数乘以权重后的较大值
+zinterstore user:ranking:1_inter_2 2 user:ranking:1 user:ranking:2 weights 1 0.5 aggregate max
+
+并集
+类似交集，参数作用与交集一致
+zunionstore user:ranking:1_union_2 2 user:ranking:1 user:ranking:2
+
+
+使用场景：
+排行榜系统
+
+
+单键管理
+删除指定键
+del hello [key]
+
+重命名键，可以对集合、hash等键重命名
+rename zsetkey zsetky
+rename user:1 user:info:1
+当重命名的键不存在时，重命名才能成功，避免覆盖
+renamenx zsetkey zsetky
+
+返回当前库中的键值对数量
+dbsize
+
+随机返回一个键
+randomkey
+
+键过期
+EXPIRE hello 10
+查询键的剩余时间
+ttl hello
+毫秒级过期时间
+pexpire key milliseconds
+清除键的过期时间，即保留键
+PERSIST key
+以下命令相当于set+expire
+setex name 50 vagrant
+注意，字符串键在执行过set后，会移除过期时间
+
