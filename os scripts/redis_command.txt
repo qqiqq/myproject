@@ -232,6 +232,8 @@ zunionstore user:ranking:1_union_2 2 user:ranking:1 user:ranking:2
 排行榜系统
 
 
+
+
 单键管理
 删除指定键
 del hello [key]
@@ -260,3 +262,43 @@ PERSIST key
 setex name 50 vagrant
 注意，字符串键在执行过set后，会移除过期时间
 
+键迁移
+将键在数据库间迁移
+move key db
+
+实例间迁移
+从源库执行以下命令，ip和port为目标地址
+migrate host port key|"" destination-db timeout [copy] [replace] [KEYS key [key
+例如：
+MIGRATE 192.168.221.134 10003 "" 0 5000 COPY KEYS key1 key2 key3
+
+
+遍历键
+全量遍历键
+keys *
+keys [j,r]edis
+
+增量遍历键
+scan cursor [MATCH pattern] [COUNT count]
+例如：
+scan 0 match key* count 3
+
+zscan key cursor [MATCH pattern] [COUNT count]
+例如：
+ZSCAN user:ranking:1_union_2 0 match *m* count 2
+以上命令均返回两部分结果
+part1，当前游标位置，为0说明迭代结束，否则下次执行时scan时，从这个值开始
+part2，实际查询得到的结果
+
+除了zscan还有以下类似命令：
+hscan、sscan
+
+最后scan命令族不能保证事务的一致性，存在脏读等现象
+
+
+数据库管理
+数据库切换
+select 3
+
+清除当前数据库内容/内容清除所有数据库下的所有
+flushdb/flushall
