@@ -302,3 +302,69 @@ select 3
 
 清除当前数据库内容/内容清除所有数据库下的所有
 flushdb/flushall
+
+
+redis重要功能
+慢查询：
+设置慢查询的阈值，单位微秒（1秒=1000毫秒=1000000微秒）
+config set slowlog-log-slower-than 20000
+设置内存中保留慢查询的记录数
+config set slowlog-max-len 1000
+
+持久化配置
+config rewrite
+
+查询配置
+CONFIG GET slowlog*
+
+获取慢查询日志
+SLOWLOG get 3
+其中的数字为返回的条数
+
+当前慢查询列表中总的记录条数
+slowlog len
+
+慢查询日志列表清理
+slowlog reset
+
+慢查询的最佳实践：
+config set slowlog-log-slower-than 1000
+config set slowlog-max-len 1000
+建议设置慢查询的阈值为1毫秒，确保单线程的redis高峰响应时间高于1000qps
+日志保留超过1000条，超出部分建议通过slowlog get转储到其他数据储存上，例如mysql
+
+慢查询只记录命令执行时间，不含单线程下，命令排队等候执行的时间
+
+
+redis shell相关命令：
+redis-cli:
+-p为连接的端口，-r为命令重复执行次数，-i为每次间隔时间（秒）
+redis-cli -p 10000 -r 3 -i 1 info Memory|grep used_memory_human
+
+-x类似shell命令中的管道占位符，用于给redis传递命令参数
+echo "world" | redis-cli -x set hello
+
+-c命令用于在cluster环境下，客户端访问的实例不包含相关slot时，自动转移到对应实例
+
+--bigkeys通过scan命令，用于查找redis中较大的key，形成相关报告
+redis-cli -p 10000 --bigkeys
+
+--stat类似于top，不如info信息全面
+redis-cli -p 10000 --stat
+能够实时反馈redis中的以下内容：
+------- data ------ --------------------- load -------------------- - child -
+keys       mem      clients blocked requests            connections          
+12         1.80M    2       0       2649 (+0)           13          
+12         1.80M    2       0       2650 (+1)           13          
+
+--raw和--no-raw参见以下例子：
+redis-cli -p 10000 set shanghai "上海"
+
+redis-cli -p 10000 get shanghai
+"\xe4\xb8\x8a\xe6\xb5\xb7"
+
+redis-cli -p 10000 --raw get shanghai 
+上海
+
+
+redis-server:
