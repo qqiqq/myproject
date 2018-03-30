@@ -367,4 +367,4 @@ redis-cli -p 10000 --raw get shanghai
 ÉÏº£
 
 
-redis-server
+redis-server:
