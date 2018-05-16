@@ -462,3 +462,63 @@ HyperLogLog内存占用量非常小，但是存在错误率，因此适用以下场景：
 
 
 消息队列：
+订阅消息，向channel:sport订阅消息
+SUBSCRIBE channel:sport
+无法查收到订阅操作之前的命令
+
+发布消息，向channel:sport发布消息
+publish channel:sport "Time win the championship"
+
+取消订阅
+UNSUBSCRIBE channel:sport
+
+按模式订阅消息
+psubscribe it*
+支持glob风格的订阅命令
+包括取消订阅消息
+unpsubscribe it*
+
+查询订阅数超过1的活跃频道
+PUBSUB channels
+pubsub channels channel:*r*
+注意这里的订阅数量不含psubscribe订阅的量
+
+查询指定频道的订阅数量
+pubsub numsub channel:sports
+注意，这里不能使用通配符等glob格式
+
+查询使用模式匹配方式订阅频道的数量
+pubsub numpat
+
+关于redis的发布订阅功能，相对于kafka等消息框架，功能较为简单、粗糙，极端环境下的性能可能也不行，
+优点在于其结构简单，功能易学易用，门槛较低
+
+GEO
+添加GEO信息
+geoadd key longitude latitude member 
+例如：
+GEOADD cities:location 116.28 39.55  beijing
+坐标为116.28 39.55，分别为经度和纬度
+geoadd cities:locations 117.12 39.08 tianjin 114.29 38.02 shijiazhuang 118.01 39.38 tangshan 115.29 38.51 baoding
+同时添加多个member
+
+更改GEO信息
+geoadd key longitude latitude member 
+反馈为0，但是相关信息会更新
+
+查询指定member的GEO信息
+GEOPOS cities:locations baoding
+
+计算指定key中两个member的距离
+geodist cities:locations baoding tianjin km
+Km可以指定其他参数，如m米，mi英里，ft英尺
+
+根据给定的坐标地址（116.403878 39.914942），计算集合中member最远（desc）的成员，并显示距离，单位km
+georadius cities:locations 116.403878 39.914942 10 km withdist desc
+
+查找指定GEO的member，在指定距离范围内的member，单位km
+georadiusbymember subways qianmen 10 km
+
+删除GEO的member
+zrem key member
+由于geo未提供相关接口，可以使用zset底层命令实现
