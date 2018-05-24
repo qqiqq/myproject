@@ -522,3 +522,246 @@ georadiusbymember subways qianmen 10 km
 删除GEO的member
 zrem key member
 由于geo未提供相关接口，可以使用zset底层命令实现
+
+
+redis客户端：
+jedis for java:
+Jedis 基本功能：
+package Test;
+import redis.clients.jedis.*;
+
+public class testForJedis {
+	public static void main(String[] args) {
+		Jedis jedis = new Jedis("192.168.146.11",6379);
+		jedis.select(2);
+		jedis.set("hello","world");
+		String value = jedis.get("hello");
+		System.out.println(value);
+		jedis.close();
+	}
+
+}
+
+Jedis基本API：
+// 1.string
+// 输出结果： OK
+jedis.set("hello", "world");
+// 输出结果： world
+jedis.get("hello");
+// 输出结果： 1
+jedis.incr("counter");
+// 2.hash
+jedis.hset("myhash", "f1", "v1");
+jedis.hset("myhash", "f2", "v2");
+// 输出结果： {f1=v1, f2=v2}
+jedis.hgetAll("myhash");
+// 3.list
+jedis.rpush("mylist", "1");
+jedis.rpush("mylist", "2");
+jedis.rpush("mylist", "3");
+// 输出结果： [1, 2, 3]
+jedis.lrange("mylist", 0, -1);
+// 4.set
+jedis.sadd("myset", "a");
+jedis.sadd("myset", "b");
+jedis.sadd("myset", "a");
+// 输出结果： [b, a]
+jedis.smembers("myset");
+// 5.zset
+jedis.zadd("myzset", 99, "tom");
+jedis.zadd("myzset", 66, "peter");
+jedis.zadd("myzset", 33, "james");
+// 输出结果： [[["james"],33.0], [["peter"],66.0], [["tom"],99.0]]
+jedis.zrangeWithScores("myzset", 0, -1);
+
+关于Jedis的序列化/反序列化：
+
+关于Jedis连接池的使用：
+package Test;
+import org.apache.commons.pool2.impl.*;
+
+import redis.clients.jedis.*;
+
+public class testForJedisPool {
+	public static void main(String[] args) {
+	Jedis jedis = null;
+	GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+	JedisPool jedisPool = new JedisPool(poolConfig, "192.168.146.12", 6379);
+	try {
+		jedis = jedisPool.getResource();
+		String value = jedis.get("hello");
+		System.out.println(value);
+	} catch (Exception e){
+		System.out.println(e);
+		return ;
+	} finally {
+		if(jedis != null) {
+			jedis.close();
+		}
+	}
+}
+}
+
+部分连接池参数：
+GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+// 设置最大连接数为默认值的5倍
+poolConfig.setMaxTotal(GenericObjectPoolConfig.DEFAULT_MAX_TOTAL * 5);
+// 设置最大空闲连接数为默认值的3倍
+poolConfig.setMaxIdle(GenericObjectPoolConfig.DEFAULT_MAX_IDLE * 3);
+// 设置最小空闲连接数为默认值的2倍
+poolConfig.setMinIdle(GenericObjectPoolConfig.DEFAULT_MIN_IDLE * 2);
+// 设置开启jmx功能
+poolConfig.setJmxEnabled(true);
+// 设置连接池没有连接后客户端的最大等待时间(单位为毫秒)
+poolConfig.setMaxWaitMillis(3000);
+
+关于jedis中实现pipeline的代码：
+package Test;
+import java.util.*;
+import redis.clients.jedis.*;
+
+public class testForJedisPipline {
+	public void mdel (List<String> keys,Jedis jedis) {
+		Pipeline pipeline1 = jedis.pipelined();
+		for (String key : keys) {
+			pipeline1.del(key);
+		}
+		//批量执行以上删除步骤
+		pipeline1.sync();
+		Pipeline pipeline2 = jedis.pipelined();
+		pipeline2.set("hello", "shanghai");
+		pipeline2.incr("counter");
+		//批量执行以上步骤，将结果反馈给rsList列表
+		List<Object> rsList = pipeline2.syncAndReturnAll();
+		for (Object rs : rsList) {
+			System.out.println(rs);
+		}
+	}
+}
+
+关于Jedis的总结
+Jedis的使用还是比较简单的， 重点注意以下几点即可：
+1） Jedis操作放在try catch finally里更加合理。
+2） 区分直连和连接池两种实现方式优缺点。
+3） jedis.close（ ） 方法的两种实现方式。
+4） Jedis依赖了common-pool， 有关common-pool的参数需要根据不同的使用场景， 各不相同， 需要具体问题具体分析。
+5） 如果key和value涉及了字节数组， 需要自己选择适合的序列化方法。
+
+
+redis-py for python:
+基本功能：
+import redis
+client = redis.StrictRedis(host='127.0.0.1', port=6379)
+key = "hello"
+setResult = client.set(key, "python-redis")
+print setResult
+value = client.get(key)
+print "key:" + key + ", value:" + value
+
+redis-py
+#1.string
+#输出结果： True
+client.set("hello","world")
+#输出结果： world
+client.get("hello")
+#输出结果： 1
+client.incr("counter")
+#2.hash
+client.hset("myhash","f1","v1")
+client.hset("myhash","f2","v2")
+#输出结果： {'f1': 'v1', 'f2': 'v2'}
+client.hgetall("myhash")
+#3.list
+client.rpush("mylist","1")
+client.rpush("mylist","2")
+client.rpush("mylist","3")
+#输出结果： ['1', '2', '3']
+client.lrange("mylist", 0, -1)
+#4.set
+client.sadd("myset","a")
+client.sadd("myset","b")
+client.sadd("myset","a")
+#输出结果： set(['a', 'b'])
+client.smembers("myset")
+#5.zset
+client.zadd("myzset","99","tom")
+client.zadd("myzset","66","peter")
+client.zadd("myzset","33","james")
+#输出结果： [('james', 33.0), ('peter', 66.0), ('tom', 99.0)]
+client.zrange("myzset", 0, -1, withscores=True)
+
+redis-py中使用pipeline：
+def redisPipeline(client):
+     '''此处的transaction参数指定为不支持事务'''
+     pipeline = client.pipeline(transaction=False)
+     pipeline.set("name","vagrant")
+     pipeline.sadd("myset","a")
+     pipeline.sadd("myset","b")
+     return pipeline.execute();
+
+
+
+客户端管理：
+client list命令能列出与Redis服务端相连的所有客户端连接信息
+id=24 addr=192.168.146.1:51083 fd=6 name= age=5499 idle=2707 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=0 qbuf-free=0 obl=0 oll=0 omem=0 events=r cmd=sadd
+id=25 addr=127.0.0.1:41563 fd=7 name= age=2448 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=0 qbuf-free=32768 obl=0 oll=0 omem=0 events=r cmd=client
+关于以上输出中的qbuf和qbuf-free，以单个连接为单位，体现输入缓存使用情况
+info clients
+...
+client_biggest_input_buf:2097152
+...
+命令输出中的这行体现输入缓存占用最多的值
+输入缓存无参数配置，redis中硬编码为1G/单个连接，同时不受maxmemory参数的限制
+
+关于以上输出的obl、oll和omen，体现单个连接的反馈结果占用缓存情况
+info clients
+# Clients
+...
+client_biggest_input_buf:2097152
+blocked_clients:0
+以上输出中
+blocked_clients： 正在执行阻塞命令（ 例如blpop、 brpop、brpoplpush） 的客户端个数。
+
+另外，输出缓存可以通过以下方式查询：
+config get client-output*
+输出的规则如下：
+client-output-buffer-limit <class> <hard limit> <soft limit> <soft seconds>
+例如：
+normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608 60
+
+可以通过以下命令查询redis最大连接数：
+config get maxclients
+
+以下命令设置客户端idle超时限制：
+config get timeout
+timeout=0，即关闭超时限制
+
+flag=N说明连接的客户端是一般客户端，S表示slave客户端，O表示当前客户端执行monitor命令
+
+关于client list其他输出说明，参见：
+https://redis.io/commands/client-list
+
+client setname test_client
+为当前客户端连接设置名字
+
+client getname
+查询当前客户端连接名字
+
+client kill ip:port
+杀死指定ip:port的客户端连接
+
+client pause timeout(毫秒)
+设置客户端阻塞时间
+
+monitor
+能够实时监控所有客户端正在执行的命令
+注意！，由于monitor监控全局操作，可能导致执行monitor的客户端输出缓存暴涨，影响系统整体性能
+
+除了info clients外，
+info stats
+total_connections_received:80
+...
+rejected_connections:0
+total_connections_received： Redis自启动以来处理的客户端连接数总数。
+rejected_connections： Redis自启动以来拒绝的客户端连接数， 需要重点监控
+
