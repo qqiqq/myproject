@@ -765,3 +765,62 @@ rejected_connections:0
 total_connections_received： Redis自启动以来处理的客户端连接数总数。
 rejected_connections： Redis自启动以来拒绝的客户端连接数， 需要重点监控
 
+
+
+redis 持久化
+
+rdb，redis内存数据的快照
+手动触发
+save：
+手动触发持久化过程，会阻塞所以有前台会话直到持久化过程结束，基本废弃
+
+bgsave：
+执行fork操作，创建子进程，rdb的持久化操作有子进程完成。阻塞一般发生在fork阶段，很短
+
+自动触发
+config文件中的配置
+save m n
+意为m秒内，数据集存在n次修改，自动触发bgsave
+
+主从节点间执行全量初始化复制时，主节点自动执行bgsave，并将数据发送至从节点
+
+
+rdb文件：
+dir参数指定文件保存路径
+dbfilename参数指定文件名
+可以通过执行config set dir{newDir}和config set dbfilename{newFileName}运行期动态执行，下次执行rdb时，配置生效
+
+rdbcompression参数，静态
+或者
+config set rdbcompression{yes|no}，动态
+设置rdb文件是否压缩，默认开启
+
+校验rdb文件
+redis-check-rdb /redis/dump.rdb 
+
+aof，append only file，以日志的形式记录写命令，从而达到数据恢复的作用
+appendonly参数，静态
+或者
+config set appendonly {yes|no}，动态
+设置aof模式
+
+dir参数设置aof文件保存路径
+appendfilename参数设置文件名
+config命令无法设置appendfilename
+
+aof文件flush策略
+appendfsync控制aof缓冲区同步文件的策略，有以下三种参数：
+always，每次写入aof缓冲区，同步调用fsync刷入aof文件
+everysec，写入aof缓冲区后，调用write操作，fsync操作由其他进程每一秒完成一次
+no，write操作写入文件系统缓存后，不做fsync同步，由OS决定实施fync操作
+
+aof的重写触发条件：
+手动
+bgrewriteaof命令
+自动
+auto-aof-rewrite-min-size和auto-aof-rewrite-percentage参数
+自动触发时机：
+aof_current_size>auto-aof-rewrite-minsize&&（aof_current_size-aof_base_size）/aof_base_size>=auto-aof-rewritepercentage
+这里的aof_current_size和aof_base_size可以通过info Persistence查询
+以上条件解读为，aof文件大于auto-aof-rewrite-minsize而且现在的大小已经扩展到上次重写后aof文件大小的auto-aof-rewritepercentage倍（默认为1）
+
