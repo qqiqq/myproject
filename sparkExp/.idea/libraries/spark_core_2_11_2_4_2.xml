@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="spark-core_2.11-2.4.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/software/spark/spark-2.4.2-bin-hadoop2-without-hive/jars/spark-core_2.11-2.4.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/software/spark/spark-2.4.2-bin-hadoop2-without-hive/jars/spark-repl_2.11-2.4.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/software/spark/spark-2.4.2-bin-hadoop2-without-hive/jars/spark-sql_2.11-2.4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
