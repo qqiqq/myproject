@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="flink-table-api-scala-bridge_2.11-1.11.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jar_files/flink-table-api-scala-bridge_2.11-1.11.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files/flink-table-common-1.11.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

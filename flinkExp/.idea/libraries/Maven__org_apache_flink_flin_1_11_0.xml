@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.flink:flin:1.11.0">
+    <CLASSES />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/flink/flin/1.11.0/flin-1.11.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/flink/flin/1.11.0/flin-1.11.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

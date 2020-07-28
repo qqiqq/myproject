@@ -7,25 +7,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b073ac6-b222-47d0-b3de-38ba64ba53c7" name="Default Changelist" comment="update regression in spark ml with decisiontree/linearregresion/generalizedlinearregresion">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/artifacts/jvm_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/libraries/scala_sdk_2_11_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/ClassLoaderTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/ConstClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/DeadLoopClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/FieldResolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/wordCountJava.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/wordCountScala.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/words.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/mlSpark/wordCountJava.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/.idea/libraries/scala_sdk_2_11_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/scala/PerfListener.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/scala/generateGoldilocks.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/test/scala/GoldilocksFirstTry.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/.idea/artifacts/training_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Machine-Learning-with-Spark-Second-Edition" beforeDir="false" afterPath="$PROJECT_DIR$/../Machine-Learning-with-Spark-Second-Edition" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../javamtia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/src/main/java/ch01/javaThreadAnywhere.java" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/src/main/java/ch01/javaThreadAnywhere.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../javamtia/src/main/java/ch02/VisibilityDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/src/main/java/ch02/VisibilityDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/target/classes/ch01/WelcomeApp2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/target/classes/ch01/WelcomeApp2$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../javamtia/target/classes/ch02/TimeConsumingTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/target/classes/ch02/TimeConsumingTask.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spark" beforeDir="false" afterPath="$PROJECT_DIR$/../spark" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/sparkExp_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/activation_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/graphframes_0_7_0_spark2_4_s_2_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/scala_sdk_2_12_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/scala_sdk_2_12_8.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/sparkExp_jar/sparkExp.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sparkExp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sparkExp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/sparkExp/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/sparkExp/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../test/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../test/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../training/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../training/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KMeansClustering.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="60">
+              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -72,13 +96,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mlSpark/wordCountJava.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="48" lean-forward="true" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+            <state relative-caret-position="45">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
               <folding>
-                <element signature="e#22#181#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/wordCount.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="e#0#48#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -87,70 +123,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SaleDataDeal.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="783">
+            <state relative-caret-position="750">
               <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-              <folding>
-                <element signature="e#22#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
-              <folding>
-                <element signature="e#22#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-              <folding>
-                <element signature="e#49#79#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
-              <folding>
-                <element signature="e#71#101#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-              <folding>
-                <element signature="e#71#101#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -162,8 +138,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="Class" />
         <option value="Package Object" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -186,7 +162,6 @@
         <option value="$PROJECT_DIR$/src/graphSCC.scala" />
         <option value="$PROJECT_DIR$/src/jfree1.java" />
         <option value="$PROJECT_DIR$/src/SaleDataDeal.scala" />
-        <option value="$PROJECT_DIR$/src/wordCount.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch06/svmClsf.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch06/dtClsf.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch06/classification.scala" />
@@ -199,17 +174,20 @@
         <option value="$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala" />
-        <option value="$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala" />
         <option value="$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala" />
+        <option value="$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala" />
+        <option value="$PROJECT_DIR$/src/mlSpark/wordCountJava.java" />
+        <option value="$PROJECT_DIR$/src/wordCount.scala" />
+        <option value="$PROJECT_DIR$/src/sparkForJson.scala" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="35" />
-    <option name="y" value="614" />
-    <option name="width" value="1785" />
-    <option name="height" value="617" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1440" />
+    <option name="y" value="-157" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -231,35 +209,7 @@
             <path>
               <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
               <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
               <item name="sparkPy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name="sparkPy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
@@ -271,13 +221,6 @@
               <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mlSpark" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparkExp" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mlSpark" type="462c0819:PsiDirectoryNode" />
-              <item name="ch07" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sparkExp" type="b2602c69:ProjectViewProjectNode" />
@@ -295,8 +238,8 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582705128603" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1594902020649" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.24367817" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -313,7 +256,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.dtClsf">
+  <component name="RunManager" selected="Application.wordCount">
     <configuration name="dtClsf" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="mlSpark.ch06.dtClsf" />
       <module name="sparkExp" />
@@ -342,15 +285,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="wordCountJava" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mlSpark.wordCountJava" />
+      <module name="sparkExp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mlSpark.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.jfree1" />
       <item itemvalue="Application.wordCount" />
       <item itemvalue="Application.dtClsf" />
+      <item itemvalue="Application.wordCountJava" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.dtClsf" />
         <item itemvalue="Application.wordCount" />
+        <item itemvalue="Application.wordCountJava" />
+        <item itemvalue="Application.dtClsf" />
         <item itemvalue="Application.jfree1" />
       </list>
     </recent_temporary>
@@ -373,13 +331,20 @@
       <option name="presentableId" value="Default" />
       <updated>1555549783690</updated>
     </task>
+    <task id="LOCAL-00001" summary="update regression in spark ml with gbt/randomForest">
+      <created>1582705214028</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1582705214028</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1057" extended-state="6" />
-    <editor active="true" />
+    <frame x="1440" y="-157" width="1920" height="1057" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12992546" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1656017" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -393,10 +358,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.48935038" visible="true" weight="0.22279793" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5106496" side_tool="true" visible="true" weight="0.22279793" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.48828542" visible="true" weight="0.22279793" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5117146" side_tool="true" visible="true" weight="0.22279793" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4978701" weight="0.16165803" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.49642345" visible="true" weight="0.3745223" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -409,7 +374,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update regression in spark ml with decisiontree/linearregresion/generalizedlinearregresion" />
-    <option name="LAST_COMMIT_MESSAGE" value="update regression in spark ml with decisiontree/linearregresion/generalizedlinearregresion" />
+    <MESSAGE value="update regression in spark ml with gbt/randomForest" />
+    <option name="LAST_COMMIT_MESSAGE" value="update regression in spark ml with gbt/randomForest" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://$USER_HOME$/Downloads/software/spark/jars/spark-core_2.11-2.3.1.jar!/org/apache/spark/rdd/RDD.class" />
@@ -436,16 +402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="87" selection-start-line="21" selection-start-column="87" selection-end-line="21" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/wordCount.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -560,22 +516,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/package.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala" />
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala" />
+    <entry file="jar://$USER_HOME$/Downloads/software/spark/spark-2.4.2-bin-hadoop2-without-hive/jars/spark-core_2.11-2.4.2.jar!/org/apache/spark/api/java/function/FlatMapFunction.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sparkForJson.scala" />
     <entry file="file://$PROJECT_DIR$/src/mlSpark/ch06/rndForest.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="e#22#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/KMeansClustering.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -590,62 +551,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/package.scala">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/RandomForestRegressionPipeline.scala">
+    <entry file="file://$PROJECT_DIR$/src/KMeansClustering.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+        <state relative-caret-position="60">
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
           <folding>
-            <element signature="e#22#52#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala">
+    <entry file="file://$PROJECT_DIR$/src/mlSpark/wordCountJava.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state relative-caret-position="45">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
           <folding>
-            <element signature="e#22#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-          <folding>
-            <element signature="e#71#101#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/LinearRegressionPipeline.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-          <folding>
-            <element signature="e#49#79#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
-          <folding>
-            <element signature="e#71#101#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SaleDataDeal.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
+        <state relative-caret-position="750">
           <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -653,12 +581,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlSpark/ch07/BikeSharingExecutor.scala">
+    <entry file="file://$PROJECT_DIR$/src/wordCount.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="48" lean-forward="true" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
           <folding>
-            <element signature="e#22#181#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -679,6 +607,7 @@
             <option name="proportions">
               <list>
                 <option value="0.24367817" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -746,7 +675,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>scala-sdk-2.12.8</last-edited>
+          <last-edited>spark-core_2.11-2.4.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

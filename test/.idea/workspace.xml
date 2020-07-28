@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a0dfb6c-d894-4a70-b700-085b297073a8" name="Default Changelist" comment="" />
+    <list default="true" id="6a0dfb6c-d894-4a70-b700-085b297073a8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/artifacts/jvm_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/libraries/scala_sdk_2_11_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/ClassLoaderTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/ConstClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/DeadLoopClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/FieldResolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/classloading/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/wordCountJava.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/wordCountScala.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jvm/src/main/java/spark/words.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparkExp/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../sparkExp/src/mlSpark/wordCountJava.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/scala_sdk_2_11_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/PerfListener.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/generateGoldilocks.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/scala/GoldilocksFirstTry.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/.idea/artifacts/training_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../training/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Machine-Learning-with-Spark-Second-Edition" beforeDir="false" afterPath="$PROJECT_DIR$/../Machine-Learning-with-Spark-Second-Edition" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/src/main/java/ch02/VisibilityDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/src/main/java/ch02/VisibilityDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../javamtia/target/classes/ch02/TimeConsumingTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/../javamtia/target/classes/ch02/TimeConsumingTask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spark" beforeDir="false" afterPath="$PROJECT_DIR$/../spark" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/.idea/libraries/scala_sdk_2_12_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sparkExp/.idea/libraries/scala_sdk_2_12_8.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../sparkExp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/out/production/sparkExp/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/../sparkExp/out/production/sparkExp/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/BikeSharingExecutor.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/DecisionTreeRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/GeneralizedLinearRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/GradientBoostedTreeRegressorPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/LinearRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sparkExp/src/mlSpark/ch07/RandomForestRegressionPipeline.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../training/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../training/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,21 +53,72 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+            <state relative-caret-position="645">
+              <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/test.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/generateGoldilocks.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/PerfListener.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/GoldilocksFirstTry.scala">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>GoldilocksWhileLoop</find>
+      <find>main</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/test/scala/GoldilocksFirstTry.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/QuantileOnlyArtisanalTest.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/scala/generateGoldilocks.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/PerfListener.scala" />
       </list>
     </option>
   </component>
@@ -38,10 +130,12 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="499" />
+    <option name="x" value="2" />
+    <option name="y" value="294" />
     <option name="width" value="1920" />
-    <option name="height" value="586" />
+    <option name="height" value="570" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -66,6 +160,26 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -74,7 +188,10 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574865473209" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589274199354" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.3067434" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -87,6 +204,21 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="generateGoldilocks" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="generateGoldilocks" />
+      <module name="test" />
+      <option name="VM_PARAMETERS" value="-Dspark.master=local" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.generateGoldilocks" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
     <option name="projectSyncType">
@@ -111,9 +243,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25772098" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27181688" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -122,14 +255,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3299363" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.28911918" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.21626984" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3299363" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -141,16 +275,108 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/QuantileOnlyArtisanalTest.scala" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        <state relative-caret-position="645">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/test.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/generateGoldilocks.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/GoldilocksFirstTry.scala">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/PerfListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="25" lean-forward="true" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>scala-sdk-2.11.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3067434" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3067434" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>test</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3067434" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
@@ -158,6 +384,18 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>scala-sdk-2.11.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3067434" />
               </list>
             </option>
           </splitter-proportions>
